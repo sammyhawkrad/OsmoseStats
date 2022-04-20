@@ -17,7 +17,11 @@
     </div>
     {{ username }}
     {{ searchResults }}
-    <router-view />
+    <UserProfile
+      v-if="userSelected"
+      :selectedUser="selectedUser"
+      :osmProfile="osmProfile"
+    />
   </div>
 </template>
 
@@ -25,35 +29,52 @@
 import axios from "axios";
 // import router from "../router";
 import SearchBar from "../components/SearchBar.vue";
+import UserProfile from "../components/UserProfile.vue";
 
 export default {
   name: "HomePage",
-  components: { SearchBar },
+  components: { SearchBar, UserProfile },
   data() {
     return {
       username: "",
       selectedUser: {},
       searchResults: [],
+      userSelected: false,
+      osmProfile: {},
     };
   },
   methods: {
     async getSearch(event) {
       this.username = event;
-      console.log(event);
       try {
         let whosthat = await axios.get(
           `http://whosthat.osmz.ru/whosthat.php?action=names&name=${event}`
         );
         this.searchResults = whosthat.data;
-        console.log(whosthat.data[0].id);
       } catch (error) {
         console.log(error);
       }
     },
     selectUser(user) {
-      this.selectedUser = user;
+      Object.assign(this.selectedUser, user);
+      console.log(this.selectedUser);
       this.username = null;
       this.searchResults = [];
+      this.userSelected = true;
+      this.getOsmProfile();
+    },
+    async getOsmProfile() {
+      try {
+        const { user } = (
+          await axios.get(
+            `https://api.openstreetmap.org/api/0.6/user/${this.selectedUser.id}.json`
+          )
+        ).data;
+        this.osmProfile = user;
+        console.log(user);
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };
