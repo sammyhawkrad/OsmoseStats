@@ -4,16 +4,18 @@
       <NavBar />
     </header>
     <main>
-      <UserProfile />
-      <UserStats />
+      <router-view />
     </main>
   </div>
 </template>
 
-<script setup>
+<script>
 import NavBar from "./components/NavBar.vue";
-import UserProfile from "./components/UserProfile.vue";
-import UserStats from "./components/UserStats.vue";
+
+export default {
+  name: "App",
+  components: { NavBar },
+};
 </script>
 
 <style>

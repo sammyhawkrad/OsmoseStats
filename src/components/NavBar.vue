@@ -3,20 +3,15 @@
     <div id="logo">
       <img src="https://osmose.openstreetmap.fr/favicon.png" alt="" />
     </div>
-    <h1>Osmose Statistics</h1>
-    <form>
-      <input
-        type="search"
-        name=""
-        id="search-bar"
-        placeholder="Enter OSM username"
-      />
-      <input type="submit" id="search-button" value="Search" />
-    </form>
+    <h1><a href="/">Osmose Statistics</a></h1>
   </nav>
 </template>
 
-<script setup></script>
+<script>
+export default {
+  name: "NavBar",
+};
+</script>
 
 <style scoped>
 nav {
@@ -27,7 +22,7 @@ nav {
   padding: 1.5rem;
   box-shadow: 1px 1px 5px lightgrey;
   display: grid;
-  grid-template-columns: 0fr 1fr max-content;
+  grid-template-columns: max-content 1fr max-content;
   column-gap: 1rem;
 }
 
@@ -37,20 +32,9 @@ nav {
   width: 1.5rem;
 }
 
-#search-bar {
-  padding: 0.7rem;
-  border: none;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-  width: 300px;
-}
-
-#search-button {
-  padding: 0.7rem;
-  border: none;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-  background-color: black;
-  color: white;
+h1 > a:visited,
+a:link {
+  text-decoration: none;
+  color: black;
 }
 </style>

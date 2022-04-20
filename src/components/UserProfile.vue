@@ -4,6 +4,11 @@
   </section>
 </template>
 
-<script setup></script>
+<script>
+export default {
+  name: "UserProfile",
+  props: { selectedUser: Object },
+};
+</script>
 
 <style scoped></style>

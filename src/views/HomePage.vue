@@ -1,0 +1,85 @@
+<template>
+  <div>
+    <SearchBar
+      @emitSearch="getSearch"
+      :username="username"
+      v-model="username"
+    />
+    <div id="search-results" v-if="searchResults.length > 0">
+      <li
+        class="list-item"
+        v-for="user in searchResults"
+        :key="user.id"
+        @click="selectUser(user)"
+      >
+        {{ user.names[0] }}
+      </li>
+    </div>
+    {{ username }}
+    {{ searchResults }}
+    <router-view />
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+// import router from "../router";
+import SearchBar from "../components/SearchBar.vue";
+
+export default {
+  name: "HomePage",
+  components: { SearchBar },
+  data() {
+    return {
+      username: "",
+      selectedUser: {},
+      searchResults: [],
+    };
+  },
+  methods: {
+    async getSearch(event) {
+      this.username = event;
+      console.log(event);
+      try {
+        let whosthat = await axios.get(
+          `http://whosthat.osmz.ru/whosthat.php?action=names&name=${event}`
+        );
+        this.searchResults = whosthat.data;
+        console.log(whosthat.data[0].id);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    selectUser(user) {
+      this.selectedUser = user;
+      this.username = null;
+      this.searchResults = [];
+    },
+  },
+};
+</script>
+
+<style scoped>
+#search-results {
+  position: relative;
+  top: 80px;
+  background-color: white;
+  width: 350px;
+  border-radius: 5px;
+  margin: auto;
+}
+
+.list-item {
+  list-style-type: none;
+  padding: 7px 10px;
+  border-bottom: 1px solid #f3eff5;
+}
+
+.list-item:hover {
+  background: rgb(245, 237, 163);
+}
+
+a:hover {
+  color: burlywood;
+}
+</style>
