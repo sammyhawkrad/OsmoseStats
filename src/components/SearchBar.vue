@@ -28,10 +28,8 @@ export default {
 
 <style scoped>
 form {
-  position: relative;
-  top: 50px;
   width: max-content;
-  margin: auto auto;
+  margin: 2rem auto auto;
 }
 
 #search-bar {

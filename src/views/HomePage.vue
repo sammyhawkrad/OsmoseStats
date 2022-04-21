@@ -82,12 +82,10 @@ export default {
 
 <style scoped>
 #search-results {
-  position: relative;
-  top: 80px;
   background-color: white;
   width: 350px;
   border-radius: 5px;
-  margin: auto;
+  margin: 1rem auto;
 }
 
 .list-item {
