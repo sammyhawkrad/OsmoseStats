@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="osm-profile" v-if="osmProfile !== {}">
+    <div class="osm-profile component" v-if="osmProfile !== {}">
       <div id="profile-picture">
         <img
           v-if="osmProfile.img"
@@ -33,16 +33,19 @@
             :href="`https://www.hdyc.neis-one.org/?${osmProfile.display_name}`"
             target="_blank"
             id="hdyc"
+            title="How did you contribute?"
             >HDYC</a
           >
           <a
             :href="`https://www.osm.org/user/${osmProfile.display_name}`"
             target="_blank"
+            title="OpenStreetMap profile"
             ><img src="../assets/osm.svg" alt=""
           /></a>
           <a
             :href="`https://www.missingmaps.org/users/#/${osmProfile.display_name}`"
             target="_blank"
+            title="Missing Maps"
             ><img src="../assets/missingmaps.svg" alt=""
           /></a>
         </div>
@@ -65,12 +68,8 @@ export default {
 
 <style scoped>
 .osm-profile {
-  background-color: white;
-  border-radius: 10px;
   width: 25rem;
   margin: auto;
-  padding: 1rem;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.04);
   display: flex;
   justify-content: space-around;
   min-height: 170px;
@@ -82,6 +81,7 @@ export default {
 
 #profile-picture > img {
   height: 90px;
+  width: 90px;
   border-radius: 50%;
   border: 2px solid #ffd449;
 }

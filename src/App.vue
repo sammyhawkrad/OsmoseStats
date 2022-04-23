@@ -34,4 +34,11 @@ export default {
 body {
   background-color: #e9e9e9;
 }
+
+.component {
+  background-color: white;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.04);
+}
 </style>
