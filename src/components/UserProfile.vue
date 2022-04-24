@@ -33,7 +33,7 @@
             :href="`https://www.hdyc.neis-one.org/?${osmProfile.display_name}`"
             target="_blank"
             id="hdyc"
-            title="How did you contribute?"
+            title="How did you contribute to OpenStreetMap?"
             >HDYC</a
           >
           <a

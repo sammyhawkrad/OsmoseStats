@@ -17,11 +17,10 @@
     </div>
     {{ username }}
     {{ searchResults }}
-    <UserProfile
-      v-if="userSelected"
-      :selectedUser="selectedUser"
-      :osmProfile="osmProfile"
-    />
+    <div class="summary" v-if="userSelected">
+      <UserProfile :selectedUser="selectedUser" :osmProfile="osmProfile" />
+      <OsmoseOverview :overview="overview" />
+    </div>
   </div>
 </template>
 
@@ -30,10 +29,11 @@ import axios from "axios";
 // import router from "../router";
 import SearchBar from "../components/SearchBar.vue";
 import UserProfile from "../components/UserProfile.vue";
+import OsmoseOverview from "../components/OsmoseOverview.vue";
 
 export default {
   name: "HomePage",
-  components: { SearchBar, UserProfile },
+  components: { SearchBar, UserProfile, OsmoseOverview },
   data() {
     return {
       username: "",
@@ -41,6 +41,11 @@ export default {
       searchResults: [],
       userSelected: false,
       osmProfile: {},
+      overview: {},
+      level1: {},
+      level2: {},
+      level3: {},
+      top500: {},
     };
   },
   methods: {
@@ -55,13 +60,14 @@ export default {
         console.log(error);
       }
     },
-    selectUser(user) {
+    async selectUser(user) {
       Object.assign(this.selectedUser, user);
       console.log(this.selectedUser);
       this.username = null;
       this.searchResults = [];
       this.userSelected = true;
-      this.getOsmProfile();
+      await this.getOsmProfile();
+      await this.getOsmoseData();
     },
     async getOsmProfile() {
       try {
@@ -72,6 +78,43 @@ export default {
         ).data;
         this.osmProfile = user;
         console.log(user);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async getOsmoseData() {
+      try {
+        await this.osmProfile;
+        const overview = (
+          await axios.get(
+            `https://osmose.openstreetmap.fr/en/byuser_count/${this.osmProfile.display_name}`
+          )
+        ).data;
+        const level1 = (
+          await axios.get(
+            `https://osmose.openstreetmap.fr/en/byuser/${this.osmProfile.display_name}.json?level=1`
+          )
+        ).data;
+        const level2 = (
+          await axios.get(
+            `https://osmose.openstreetmap.fr/en/byuser/${this.osmProfile.display_name}.json?level=2`
+          )
+        ).data;
+        const level3 = (
+          await axios.get(
+            `https://osmose.openstreetmap.fr/en/byuser/${this.osmProfile.display_name}.json?level=3`
+          )
+        ).data;
+        const top500 = (
+          await axios.get(
+            `https://osmose.openstreetmap.fr/en/byuser/${this.osmProfile.display_name}.json?`
+          )
+        ).data;
+        this.overview = overview;
+        this.level1 = level1;
+        this.level2 = level2;
+        this.level3 = level3;
+        console.log(overview, level1, level2, level3, top500);
       } catch (error) {
         console.log(error);
       }
@@ -100,5 +143,11 @@ export default {
 
 a:hover {
   color: burlywood;
+}
+
+.summary {
+  display: flex;
+  justify-content: center;
+  column-gap: 1rem;
 }
 </style>
