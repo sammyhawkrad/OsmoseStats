@@ -68,6 +68,7 @@ export default {
       this.userSelected = true;
       await this.getOsmProfile();
       await this.getOsmoseData();
+      // this.createCounts();
     },
     async getOsmProfile() {
       try {
@@ -110,14 +111,25 @@ export default {
             `https://osmose.openstreetmap.fr/en/byuser/${this.osmProfile.display_name}.json?`
           )
         ).data;
+
         this.overview = overview;
-        this.level1 = level1;
-        this.level2 = level2;
-        this.level3 = level3;
+        this.level1 = this.createCounts(level1);
+        this.level2 = this.createCounts(level2);
+        this.level3 = this.createCounts(level3);
         console.log(overview, level1, level2, level3, top500);
+        console.log(this.createCounts(level1));
       } catch (error) {
         console.log(error);
       }
+    },
+    createCounts(data) {
+      const counts = data.errors
+        .map((issue) => issue.menu)
+        .reduce((accum, x) => {
+          accum[x] = accum[x] ? accum[x] + 1 : 1;
+          return accum;
+        }, {});
+      return counts;
     },
   },
 };

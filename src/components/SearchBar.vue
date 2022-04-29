@@ -7,7 +7,7 @@
         id="search-bar"
         placeholder="Enter OSM username"
         name="username"
-        @input="emitSearch"
+        @change="emitSearch"
       />
       <button type="submit" id="search-button">Search</button>
     </form>
