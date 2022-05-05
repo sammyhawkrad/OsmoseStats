@@ -35,6 +35,12 @@ body {
   background-color: #e9e9e9;
 }
 
+main {
+  width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .component {
   background-color: white;
   border-radius: 10px;

@@ -13,7 +13,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 nav {
   position: sticky;
   background-color: #ffd449;

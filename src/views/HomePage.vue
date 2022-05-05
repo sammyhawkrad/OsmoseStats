@@ -17,9 +17,28 @@
     </div>
     {{ username }}
     {{ searchResults }}
-    <div class="summary" v-if="userSelected">
-      <UserProfile :selectedUser="selectedUser" :osmProfile="osmProfile" />
-      <OsmoseOverview :overview="overview" />
+    <div v-if="userSelected">
+      <div class="summary">
+        <UserProfile :selectedUser="selectedUser" :osmProfile="osmProfile" />
+        <OsmoseOverview :overview="overview" />
+      </div>
+      <div id="levels">
+        <BarChart
+          class="component"
+          v-if="overview[1] > 0"
+          :chart-data="{ datasets: [{ data: level1 }] }"
+        />
+        <BarChart
+          class="component"
+          v-if="overview[2] > 0"
+          :chart-data="{ datasets: [{ data: level2 }] }"
+        />
+        <BarChart
+          class="component"
+          v-if="overview[3] > 0"
+          :chart-data="{ datasets: [{ data: level3 }] }"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -30,10 +49,11 @@ import axios from "axios";
 import SearchBar from "../components/SearchBar.vue";
 import UserProfile from "../components/UserProfile.vue";
 import OsmoseOverview from "../components/OsmoseOverview.vue";
+import BarChart from "../components/BarChart.vue";
 
 export default {
   name: "HomePage",
-  components: { SearchBar, UserProfile, OsmoseOverview },
+  components: { SearchBar, UserProfile, OsmoseOverview, BarChart },
   data() {
     return {
       username: "",
@@ -125,8 +145,8 @@ export default {
     createCounts(data) {
       const counts = data.errors
         .map((issue) => issue.menu)
-        .reduce((accum, x) => {
-          accum[x] = accum[x] ? accum[x] + 1 : 1;
+        .reduce((accum, i) => {
+          accum[i] = accum[i] ? accum[i] + 1 : 1;
           return accum;
         }, {});
       return counts;
