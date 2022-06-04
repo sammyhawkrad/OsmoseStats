@@ -75,7 +75,7 @@ export default {
       this.username = event;
       try {
         let whosthat = await axios.get(
-          `http://whosthat.osmz.ru/whosthat.php?action=names&name=${event}`
+          `https://whosthat.osmz.ru/whosthat.php?action=names&name=${event}`
         );
         this.searchResults = whosthat.data;
       } catch (error) {
