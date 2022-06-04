@@ -115,4 +115,10 @@ export default {
   line-height: 1rem;
   text-decoration: none;
 }
+
+@media screen and (max-width: 799px) {
+  .osm-profile {
+    width: 100%;
+  }
+}
 </style>

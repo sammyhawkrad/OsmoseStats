@@ -4,6 +4,9 @@
       <img src="https://osmose.openstreetmap.fr/favicon.png" alt="" />
     </div>
     <h1><a href="/">Osmose Statistics</a></h1>
+    <a href="https://github.com/sammyhawkrad/OsmoseStats" target="blank"
+      ><img src="../assets/github.png" alt="GitHub Logo"
+    /></a>
   </nav>
 </template>
 
@@ -15,9 +18,11 @@ export default {
 
 <style>
 nav {
-  position: sticky;
+  position: fixed;
+  top: 0;
+  left: 0;
   background-color: #ffd449;
-  opacity: 75%;
+  opacity: 95%;
   width: 100%;
   padding: 1.5rem;
   box-shadow: 1px 1px 5px lightgrey;

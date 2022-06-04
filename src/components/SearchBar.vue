@@ -29,7 +29,7 @@ export default {
 <style scoped>
 form {
   width: max-content;
-  margin: 2rem auto auto;
+  margin: 10rem auto 2rem auto;
 }
 
 #search-bar {

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="homepage">
     <SearchBar
       @emitSearch="getSearch"
       :username="username"
@@ -15,8 +15,6 @@
         {{ user.names[0] }}
       </li>
     </div>
-    {{ username }}
-    {{ searchResults }}
     <div v-if="userSelected">
       <div class="summary">
         <UserProfile :selectedUser="selectedUser" :osmProfile="osmProfile" />
@@ -181,5 +179,16 @@ a:hover {
   display: flex;
   justify-content: center;
   column-gap: 1rem;
+}
+
+@media screen and (max-width: 799px) {
+  #homepage {
+    width: 96%;
+    margin: auto;
+  }
+  .summary {
+    flex-direction: column;
+    row-gap: 1rem;
+  }
 }
 </style>

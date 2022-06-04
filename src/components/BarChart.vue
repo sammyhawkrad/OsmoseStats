@@ -43,6 +43,8 @@ export default {
     return {
       chartOptions: {
         responsive: true,
+        backgroundColor: "grey",
+        autoPadding: true,
       },
       height: 400,
       width: 600,
