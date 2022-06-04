@@ -21,21 +21,25 @@
         <OsmoseOverview :overview="overview" />
       </div>
       <div id="levels">
-        <BarChart
-          class="component"
-          v-if="overview[1] > 0"
-          :chart-data="{ datasets: [{ data: level1 }] }"
-        />
-        <BarChart
-          class="component"
-          v-if="overview[2] > 0"
-          :chart-data="{ datasets: [{ data: level2 }] }"
-        />
-        <BarChart
-          class="component"
-          v-if="overview[3] > 0"
-          :chart-data="{ datasets: [{ data: level3 }] }"
-        />
+        <div class="component" v-if="overview[1] > 0">
+          <h3>Level 1 issues</h3>
+          <BarChart
+            :chart-data="{ datasets: [{ label: 'Issues', data: level1 }] }"
+          />
+        </div>
+        <div class="component" v-if="overview[2] > 0">
+          <h3>Level 2 issues</h3>
+          <BarChart
+            :chart-data="{ datasets: [{ label: 'Issues', data: level2 }] }"
+          />
+        </div>
+
+        <div class="component" v-if="overview[3] > 0">
+          <h3>Level 3 issues</h3>
+          <BarChart
+            :chart-data="{ datasets: [{ label: 'Issues', data: level3 }] }"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -86,7 +90,6 @@ export default {
       this.userSelected = true;
       await this.getOsmProfile();
       await this.getOsmoseData();
-      // this.createCounts();
     },
     async getOsmProfile() {
       try {
@@ -96,7 +99,6 @@ export default {
           )
         ).data;
         this.osmProfile = user;
-        console.log(user);
       } catch (error) {
         console.log(error);
       }
@@ -124,18 +126,16 @@ export default {
             `https://osmose.openstreetmap.fr/en/byuser/${this.osmProfile.display_name}.json?level=3`
           )
         ).data;
-        const top500 = (
-          await axios.get(
-            `https://osmose.openstreetmap.fr/en/byuser/${this.osmProfile.display_name}.json?`
-          )
-        ).data;
+        // const top500 = (
+        //   await axios.get(
+        //     `https://osmose.openstreetmap.fr/en/byuser/${this.osmProfile.display_name}.json?`
+        //   )
+        // ).data;
 
         this.overview = overview;
         this.level1 = this.createCounts(level1);
         this.level2 = this.createCounts(level2);
         this.level3 = this.createCounts(level3);
-        console.log(overview, level1, level2, level3, top500);
-        console.log(this.createCounts(level1));
       } catch (error) {
         console.log(error);
       }
@@ -179,6 +179,17 @@ a:hover {
   display: flex;
   justify-content: center;
   column-gap: 1rem;
+}
+
+#levels {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+  margin-top: 2rem;
+}
+
+h3 {
+  text-align: center;
 }
 
 @media screen and (max-width: 799px) {
