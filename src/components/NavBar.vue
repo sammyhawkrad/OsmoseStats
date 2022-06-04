@@ -3,7 +3,7 @@
     <div id="logo">
       <img src="https://osmose.openstreetmap.fr/favicon.png" alt="" />
     </div>
-    <h1><a href="/">Osmose Statistics</a></h1>
+    <h1><a href="/OsmoseStats">Osmose Statistics</a></h1>
     <a href="https://github.com/sammyhawkrad/OsmoseStats" target="blank"
       ><img src="../assets/github.png" alt="GitHub Logo"
     /></a>

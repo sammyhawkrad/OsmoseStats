@@ -1,41 +1,27 @@
 # OsmoseStats
 
-This template should help get you started developing with Vue 3 in Vite.
+This website is a page to give you a summary statistics of issues with your OpenStreetMap
+contributions as flagged by Osmose.
 
-## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.vscode-typescript-vue-plugin).
+### Search for username
 
-## Customize configuration
+Simply enter your OSM username in the search bar and press enter, then select the correct
+username from the results. For people who have changed usernames in the past, an old username
+may pop up due to the API used.
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+![Search Preview](search_preview.png)
 
-## Project Setup
 
-```sh
-npm install
-```
+### Select and view statistics
 
-### Compile and Hot-Reload for Development
+Select the OSM username and see statistics for the contributor
 
-```sh
-npm run dev
-```
+![](result_preview.png)
 
-### Compile and Minify for Production
 
-```sh
-npm run build
-```
+## License
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+MIT License
 
-```sh
-npm run test:unit
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+Copyright (c) 2022 Samuel Darkwah Manu
