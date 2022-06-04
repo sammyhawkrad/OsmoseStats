@@ -23,12 +23,14 @@
       <div id="levels">
         <div class="component" v-if="overview[1] > 0">
           <h3>Level 1 issues</h3>
+          <p v-if="overview[1] > 500">* Showing statistics for 500 issues</p>
           <BarChart
             :chart-data="{ datasets: [{ label: 'Issues', data: level1 }] }"
           />
         </div>
         <div class="component" v-if="overview[2] > 0">
           <h3>Level 2 issues</h3>
+          <p v-if="overview[2] > 500">* Showing statistics for 500 issues</p>
           <BarChart
             :chart-data="{ datasets: [{ label: 'Issues', data: level2 }] }"
           />
@@ -36,6 +38,7 @@
 
         <div class="component" v-if="overview[3] > 0">
           <h3>Level 3 issues</h3>
+          <p v-if="overview[3] > 500">* Showing statistics for 500 issues</p>
           <BarChart
             :chart-data="{ datasets: [{ label: 'Issues', data: level3 }] }"
           />
@@ -84,7 +87,6 @@ export default {
     },
     async selectUser(user) {
       Object.assign(this.selectedUser, user);
-      console.log(this.selectedUser);
       this.username = null;
       this.searchResults = [];
       this.userSelected = true;
@@ -186,9 +188,6 @@ a:hover {
   flex-direction: column;
   row-gap: 2rem;
   margin-top: 2rem;
-}
-
-h3 {
   text-align: center;
 }
 
