@@ -19,6 +19,9 @@ jobs:
         with:
           node-version: 16
 
+      - name: Install vite
+        run: npm i -g vite
+
       - name: Install dependencies
         uses: bahmutov/npm-install@v1
 
