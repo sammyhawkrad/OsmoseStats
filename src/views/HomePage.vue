@@ -22,14 +22,14 @@
       </div>
       <div id="levels">
         <div class="component" v-if="overview[1] > 0">
-          <h3>Level 1 issues</h3>
+          <h3>Level 1 (Major issues)</h3>
           <p v-if="overview[1] > 500">* Showing statistics for 500 issues</p>
           <BarChart
             :chart-data="{ datasets: [{ label: 'Issues', data: level1 }] }"
           />
         </div>
         <div class="component" v-if="overview[2] > 0">
-          <h3>Level 2 issues</h3>
+          <h3>Level 2 (Intermediate issues)</h3>
           <p v-if="overview[2] > 500">* Showing statistics for 500 issues</p>
           <BarChart
             :chart-data="{ datasets: [{ label: 'Issues', data: level2 }] }"
@@ -37,7 +37,7 @@
         </div>
 
         <div class="component" v-if="overview[3] > 0">
-          <h3>Level 3 issues</h3>
+          <h3>Level 3 (Minor issues)</h3>
           <p v-if="overview[3] > 500">* Showing statistics for 500 issues</p>
           <BarChart
             :chart-data="{ datasets: [{ label: 'Issues', data: level3 }] }"
@@ -115,17 +115,17 @@ export default {
         ).data;
         const level1 = (
           await axios.get(
-            `https://osmose.openstreetmap.fr/en/byuser/${this.osmProfile.display_name}.json?level=1`
+            `https://osmose.openstreetmap.fr/api/0.3/user/${this.osmProfile.display_name}?level=1`
           )
         ).data;
         const level2 = (
           await axios.get(
-            `https://osmose.openstreetmap.fr/en/byuser/${this.osmProfile.display_name}.json?level=2`
+            `https://osmose.openstreetmap.fr/api/0.3/user/${this.osmProfile.display_name}?level=2`
           )
         ).data;
         const level3 = (
           await axios.get(
-            `https://osmose.openstreetmap.fr/en/byuser/${this.osmProfile.display_name}.json?level=3`
+            `https://osmose.openstreetmap.fr/api/0.3/user/${this.osmProfile.display_name}?level=3`
           )
         ).data;
         // const top500 = (
@@ -143,8 +143,8 @@ export default {
       }
     },
     createCounts(data) {
-      const counts = data.errors
-        .map((issue) => issue.menu)
+      const counts = data.issues
+        .map((issue) => issue.menu.en)
         .reduce((accum, i) => {
           accum[i] = accum[i] ? accum[i] + 1 : 1;
           return accum;
@@ -187,7 +187,7 @@ a:hover {
   display: flex;
   flex-direction: column;
   row-gap: 2rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
   text-align: center;
 }
 
