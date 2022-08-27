@@ -107,27 +107,33 @@ export default {
     },
     async getOsmoseData() {
       try {
+        const OSMOSE_API = "https://osmose.openstreetmap.fr/api/0.3/user";
         await this.osmProfile;
+
         const overview = (
           await axios.get(
             `https://osmose.openstreetmap.fr/en/byuser_count/${this.osmProfile.display_name}`
           )
         ).data;
+
         const level1 = (
           await axios.get(
-            `https://osmose.openstreetmap.fr/api/0.3/user/${this.osmProfile.display_name}?level=1`
+            `${OSMOSE_API}/${this.osmProfile.display_name}?level=1`
           )
         ).data;
+
         const level2 = (
           await axios.get(
-            `https://osmose.openstreetmap.fr/api/0.3/user/${this.osmProfile.display_name}?level=2`
+            `${OSMOSE_API}/${this.osmProfile.display_name}?level=2`
           )
         ).data;
+
         const level3 = (
           await axios.get(
-            `https://osmose.openstreetmap.fr/api/0.3/user/${this.osmProfile.display_name}?level=3`
+            `${OSMOSE_API}/${this.osmProfile.display_name}?level=3`
           )
         ).data;
+
         // const top500 = (
         //   await axios.get(
         //     `https://osmose.openstreetmap.fr/en/byuser/${this.osmProfile.display_name}.json?`
