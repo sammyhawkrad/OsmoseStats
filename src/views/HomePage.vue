@@ -22,14 +22,38 @@
       </div>
       <div id="levels">
         <div class="component" v-if="overview[1] > 0">
-          <h3>Level 1 (Major issues)</h3>
+          <h3>
+            Level 1 (Major issues)
+            <span title="View issues">
+              <a
+                :href="`https://osmose.openstreetmap.fr/en/byuser/${osmProfile.display_name}?level=1`"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img src="../assets/resize.png" />
+              </a>
+            </span>
+          </h3>
           <p v-if="overview[1] > 500">* Showing statistics for 500 issues</p>
           <BarChart
             :chart-data="{ datasets: [{ label: 'Issues', data: level1 }] }"
           />
         </div>
+
         <div class="component" v-if="overview[2] > 0">
-          <h3>Level 2 (Intermediate issues)</h3>
+          <h3>
+            Level 2 (Intermediate issues)
+            <span title="View issues">
+              <a
+                :href="`https://osmose.openstreetmap.fr/en/byuser/${osmProfile.display_name}?level=2`"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img src="../assets/resize.png" alt="" />
+              </a>
+            </span>
+          </h3>
+
           <p v-if="overview[2] > 500">* Showing statistics for 500 issues</p>
           <BarChart
             :chart-data="{ datasets: [{ label: 'Issues', data: level2 }] }"
@@ -37,11 +61,29 @@
         </div>
 
         <div class="component" v-if="overview[3] > 0">
-          <h3>Level 3 (Minor issues)</h3>
+          <h3>
+            Level 3 (Minor issues)
+            <span title="View issues">
+              <a
+                :href="`https://osmose.openstreetmap.fr/en/byuser/${osmProfile.display_name}?level=3`"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img src="../assets/resize.png" alt="" />
+              </a>
+            </span>
+          </h3>
           <p v-if="overview[3] > 500">* Showing statistics for 500 issues</p>
           <BarChart
             :chart-data="{ datasets: [{ label: 'Issues', data: level3 }] }"
           />
+        </div>
+
+        <div class="component" v-if="places.length > 0">
+          <PlaceCounts :places="places" />
+          <p v-if="overview[1] + overview[2] + overview[3] > 500">
+            * Showing statistic for only 500 issues
+          </p>
         </div>
       </div>
     </div>
@@ -55,10 +97,11 @@ import SearchBar from "../components/SearchBar.vue";
 import UserProfile from "../components/UserProfile.vue";
 import OsmoseOverview from "../components/OsmoseOverview.vue";
 import BarChart from "../components/BarChart.vue";
+import PlaceCounts from "../components/PlaceCounts.vue";
 
 export default {
   name: "HomePage",
-  components: { SearchBar, UserProfile, OsmoseOverview, BarChart },
+  components: { SearchBar, UserProfile, OsmoseOverview, BarChart, PlaceCounts },
   data() {
     return {
       username: "",
@@ -70,7 +113,7 @@ export default {
       level1: {},
       level2: {},
       level3: {},
-      top500: {},
+      places: [],
     };
   },
   methods: {
@@ -134,16 +177,15 @@ export default {
           )
         ).data;
 
-        // const top500 = (
-        //   await axios.get(
-        //     `https://osmose.openstreetmap.fr/en/byuser/${this.osmProfile.display_name}.json?`
-        //   )
-        // ).data;
+        const places = (
+          await axios.get(`${OSMOSE_API}/${this.osmProfile.display_name}`)
+        ).data;
 
         this.overview = overview;
         this.level1 = this.createCounts(level1);
         this.level2 = this.createCounts(level2);
         this.level3 = this.createCounts(level3);
+        this.places = this.countPlaces(places);
       } catch (error) {
         console.log(error);
       }
@@ -156,6 +198,15 @@ export default {
           return accum;
         }, {});
       return counts;
+    },
+    countPlaces(data) {
+      const counts = data.issues
+        .map((issue) => issue.country)
+        .reduce((accum, i) => {
+          accum[i] = accum[i] ? accum[i] + 1 : 1;
+          return accum;
+        }, {});
+      return Object.entries(counts).sort((a, b) => b[1] - a[1]);
     },
   },
 };
