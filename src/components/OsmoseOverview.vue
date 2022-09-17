@@ -4,7 +4,8 @@
       <h2>Issues Overview</h2>
       <p>
         You have
-        <span>{{
+        <span v-if="loading"> ... </span>
+        <span v-else>{{
           overview[1] + overview[2] + overview[3] > 0
             ? overview[1] + overview[2] + overview[3]
             : "no"
@@ -15,14 +16,17 @@
 
     <div class="card-group">
       <div id="level1" class="card" title="Major issues">
+        <p class="label" v-if="loading">Loading...</p>
         <p class="count">{{ overview[1] }}</p>
         <p class="label">Level 1</p>
       </div>
       <div id="level2" class="card" title="Intermediate issues">
+        <p class="label" v-if="loading">Loading...</p>
         <p class="count">{{ overview[2] }}</p>
         <p class="label">Level 2</p>
       </div>
       <div id="level3" class="card" title="Minor issues">
+        <p class="label" v-if="loading">Loading...</p>
         <p class="count">{{ overview[3] }}</p>
         <p class="label">Level 3</p>
       </div>
@@ -33,7 +37,7 @@
 <script>
 export default {
   name: "OsmoseOverview",
-  props: { overview: Object },
+  props: { overview: Object, loading: Boolean },
 };
 </script>
 

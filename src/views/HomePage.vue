@@ -18,7 +18,7 @@
     <div v-if="userSelected">
       <div class="summary">
         <UserProfile :selectedUser="selectedUser" :osmProfile="osmProfile" />
-        <OsmoseOverview :overview="overview" />
+        <OsmoseOverview :overview="overview" :loading="loading" />
       </div>
       <div id="levels">
         <div class="component" v-if="overview[1] > 0">
@@ -114,9 +114,20 @@ export default {
       level2: {},
       level3: {},
       places: [],
+      loading: true,
     };
   },
   methods: {
+    reset() {
+      this.searchResults = [];
+      this.osmProfile = {};
+      this.overview = {};
+      this.level1 = {};
+      this.level2 = {};
+      this.level3 = {};
+      this.places = [];
+      this.loading = true;
+    },
     async getSearch(event) {
       this.username = event;
       try {
@@ -135,9 +146,11 @@ export default {
       this.userSelected = true;
       await this.getOsmProfile();
       await this.getOsmoseData();
+      this.loading = false;
     },
     async getOsmProfile() {
       try {
+        this.reset();
         const { user } = (
           await axios.get(
             `https://api.openstreetmap.org/api/0.6/user/${this.selectedUser.id}.json`
