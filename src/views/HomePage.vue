@@ -168,7 +168,7 @@ export default {
 
         const overview = (
           await axios.get(
-            `https://osmose.openstreetmap.fr/en/byuser_count/${this.osmProfile.display_name}`
+            `https://osmose.openstreetmap.fr/api/0.3/user_count/${this.osmProfile.display_name}`
           )
         ).data;
 
