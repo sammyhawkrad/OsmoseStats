@@ -12,7 +12,7 @@
         :key="user.id"
         @click="selectUser(user)"
       >
-        {{ user.names[0] }}
+        {{ user.names[user.names.length - 1] }}
       </li>
     </div>
     <div v-if="userSelected">
