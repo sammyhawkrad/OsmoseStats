@@ -38,12 +38,16 @@ export default {
       type: Object,
       required: true,
     },
+    colour: {
+      type: String,
+      required: true,
+    },
   },
   data() {
     return {
       chartOptions: {
         responsive: true,
-        backgroundColor: "grey",
+        backgroundColor: this.colour,
         autoPadding: true,
       },
       height: 400,
