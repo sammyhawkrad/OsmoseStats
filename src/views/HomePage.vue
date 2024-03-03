@@ -36,7 +36,12 @@
           </h3>
           <p v-if="overview[1] > 500">* Showing statistics for 500 issues</p>
           <BarChart
-            :chart-data="{ datasets: [{ label: 'Issues', data: level1 }] }"
+            :chart-data="{
+              labels: Object.keys(level1),
+              datasets: [
+                { axis: 'y', label: 'Issues', data: Object.values(level1) },
+              ],
+            }"
             :colour="level1colour"
           />
         </div>
@@ -57,7 +62,12 @@
 
           <p v-if="overview[2] > 500">* Showing statistics for 500 issues</p>
           <BarChart
-            :chart-data="{ datasets: [{ label: 'Issues', data: level2 }] }"
+            :chart-data="{
+              labels: Object.keys(level2),
+              datasets: [
+                { axis: 'y', label: 'Issues', data: Object.values(level2) },
+              ],
+            }"
             :colour="level2colour"
           />
         </div>
@@ -77,7 +87,12 @@
           </h3>
           <p v-if="overview[3] > 500">* Showing statistics for 500 issues</p>
           <BarChart
-            :chart-data="{ datasets: [{ label: 'Issues', data: level3 }] }"
+            :chart-data="{
+              labels: Object.keys(level3),
+              datasets: [
+                { axis: 'y', label: 'Issues', data: Object.values(level3) },
+              ],
+            }"
             :colour="level3colour"
           />
         </div>

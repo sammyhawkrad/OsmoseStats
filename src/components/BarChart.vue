@@ -1,11 +1,6 @@
 <template>
   <div class="bar-chart">
-    <Bar
-      :chart-options="chartOptions"
-      :chart-data="chartData"
-      :width="width"
-      :height="height"
-    />
+    <Bar :chart-options="chartOptions" :chart-data="chartData" :width="width" />
   </div>
 </template>
 
@@ -49,9 +44,9 @@ export default {
         responsive: true,
         backgroundColor: this.colour,
         autoPadding: true,
+        indexAxis: "y",
       },
-      height: 400,
-      width: 600,
+      width: 800,
     };
   },
 };
