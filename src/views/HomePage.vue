@@ -162,7 +162,7 @@ export default {
     },
     async selectUser(user) {
       Object.assign(this.selectedUser, user);
-      this.username = null;
+      this.username = "";
       this.searchResults = [];
       this.userSelected = true;
       await this.getOsmProfile();
