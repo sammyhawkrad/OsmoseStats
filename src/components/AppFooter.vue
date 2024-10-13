@@ -35,12 +35,12 @@ footer {
   margin-top: 50px;
   width: 100%;
   text-align: center;
-  background-color: azure;
+  background-color: rgba(240, 255, 255, 0.404);
   opacity: 70%;
   font-size: 0.7rem;
 }
 
 footer > div {
-  margin: au;
+  margin: auto;
 }
 </style>
