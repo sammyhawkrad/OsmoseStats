@@ -40,13 +40,7 @@
             :href="`https://www.osm.org/user/${osmProfile.display_name}`"
             target="_blank"
             title="OpenStreetMap profile"
-            ><img src="../assets/osm.svg" alt=""
-          /></a>
-          <a
-            :href="`https://www.missingmaps.org/users/#/${osmProfile.display_name}`"
-            target="_blank"
-            title="Missing Maps"
-            ><img src="../assets/missingmaps.svg" alt=""
+            ><img src="../assets/osm.svg" alt="OpenStreetMap Profile"
           /></a>
         </div>
       </div>
