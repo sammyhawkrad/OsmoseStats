@@ -8,7 +8,7 @@
     <div id="search-results" v-if="searchResults.length > 0">
       <li
         class="list-item"
-        v-for="user in searchResults"
+        v-for="user in searchResults.slice(0, 4)"
         :key="user.id"
         @click="selectUser(user)"
       >
@@ -153,7 +153,7 @@ export default {
       this.username = event;
       try {
         let whosthat = await axios.get(
-          `https://whosthat.osmz.ru/whosthat.php?action=names&name=${event}`
+          `https://whosthat.osmz.ru/whosthat.php?action=names&q=${event}`
         );
         this.searchResults = whosthat.data;
       } catch (error) {
