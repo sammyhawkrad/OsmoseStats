@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="osm-profile component" v-if="osmProfile !== {}">
+    <div class="osm-profile component" v-if="osmProfile.display_name">
       <div id="profile-picture">
         <img
           v-if="osmProfile.img"
