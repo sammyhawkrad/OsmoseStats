@@ -34,7 +34,9 @@
               </a>
             </span>
           </h3>
-          <p v-if="overview[1] > 500">* Showing statistics for 500 issues</p>
+          <p class="note" v-if="overview[1] > 500">
+            * Showing statistics for 500 issues
+          </p>
           <BarChart
             :chart-data="{
               labels: Object.keys(level1),
@@ -60,7 +62,9 @@
             </span>
           </h3>
 
-          <p v-if="overview[2] > 500">* Showing statistics for 500 issues</p>
+          <p class="note" v-if="overview[2] > 500">
+            * Showing statistics for 500 issues
+          </p>
           <BarChart
             :chart-data="{
               labels: Object.keys(level2),
@@ -85,7 +89,9 @@
               </a>
             </span>
           </h3>
-          <p v-if="overview[3] > 500">* Showing statistics for 500 issues</p>
+          <p class="note" v-if="overview[3] > 500">
+            * Showing statistics for 500 issues
+          </p>
           <BarChart
             :chart-data="{
               labels: Object.keys(level3),
@@ -99,8 +105,15 @@
 
         <div class="component" v-if="places.length > 0">
           <PlaceCounts :places="places" />
-          <p v-if="overview[1] + overview[2] + overview[3] > 500">
-            * Showing statistic for only 500 issues
+          <p class="note" v-if="overview[1] + overview[2] + overview[3] > 1500">
+            * Showing statistic for a maximum 1500 issues
+          </p>
+        </div>
+        <div class="component" v-if="pic.length > 0">
+          <h3>Partners in Crime</h3>
+          <PartnerInCrime :pic="pic" />
+          <p class="note" v-if="overview[1] + overview[2] + overview[3] > 1500">
+            * Showing statistic for a maximum 1500 issues
           </p>
         </div>
       </div>
@@ -116,10 +129,18 @@ import UserProfile from "../components/UserProfile.vue";
 import OsmoseOverview from "../components/OsmoseOverview.vue";
 import BarChart from "../components/BarChart.vue";
 import PlaceCounts from "../components/PlaceCounts.vue";
+import PartnerInCrime from "../components/PartnerInCrime.vue";
 
 export default {
   name: "HomePage",
-  components: { SearchBar, UserProfile, OsmoseOverview, BarChart, PlaceCounts },
+  components: {
+    SearchBar,
+    UserProfile,
+    OsmoseOverview,
+    BarChart,
+    PlaceCounts,
+    PartnerInCrime,
+  },
   data() {
     return {
       username: "",
@@ -132,6 +153,7 @@ export default {
       level2: {},
       level3: {},
       places: [],
+      pic: [],
       loading: true,
       level1colour: "#d00000",
       level2colour: "#e85d04",
@@ -147,6 +169,7 @@ export default {
       this.level2 = {};
       this.level3 = {};
       this.places = [];
+      this.pic = [];
       this.loading = true;
     },
     async getSearch(event) {
@@ -211,17 +234,30 @@ export default {
           )
         ).data;
 
-        const places = (
-          await axios.get(`${OSMOSE_API}/${this.osmProfile.display_name}`)
-        ).data;
+        // Merge all levels into one object
+        const allLevels = {
+          issues: [...level1.issues, ...level2.issues, ...level3.issues],
+        };
 
         this.overview = overview;
         this.level1 = this.count(level1, "menu");
         this.level2 = this.count(level2, "menu");
         this.level3 = this.count(level3, "menu");
-        this.places = Object.entries(this.count(places, "country")).sort(
+        this.places = Object.entries(this.count(allLevels, "country")).sort(
           (a, b) => b[1] - a[1]
         );
+
+        let pic = allLevels.issues
+          .map((issue) => issue.elems.map((elem) => elem.username))
+          .flat()
+          .reduce((accum, i) => {
+            accum[i] = accum[i] ? accum[i] + 1 : 1;
+            return accum;
+          }, {});
+
+        delete pic[this.osmProfile.display_name];
+
+        this.pic = Object.entries(pic).sort((a, b) => b[1] - a[1]);
       } catch (error) {
         console.log(error);
       }
@@ -273,6 +309,11 @@ a:hover {
   row-gap: 2rem;
   margin-top: 1rem;
   text-align: center;
+}
+
+.note {
+  font-size: 0.65rem;
+  color: #313030;
 }
 
 @media screen and (max-width: 799px) {
