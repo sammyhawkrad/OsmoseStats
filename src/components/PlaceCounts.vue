@@ -23,7 +23,10 @@ export default {
   props: { places: Array },
   methods: {
     capitalise(str) {
-      return str.replace(/^\w/, (c) => c.toUpperCase());
+      return str
+        .replace(/_/g, " ")
+        .replace(/\b\w/g, (c) => c.toUpperCase())
+        .replace(/-/g, " ");
     },
   },
 };
