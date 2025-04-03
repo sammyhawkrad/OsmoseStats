@@ -216,31 +216,24 @@ export default {
         ).data;
 
         this.overview = overview;
-        this.level1 = this.createCounts(level1);
-        this.level2 = this.createCounts(level2);
-        this.level3 = this.createCounts(level3);
-        this.places = this.countPlaces(places);
+        this.level1 = this.count(level1, "menu");
+        this.level2 = this.count(level2, "menu");
+        this.level3 = this.count(level3, "menu");
+        this.places = Object.entries(this.count(places, "country")).sort(
+          (a, b) => b[1] - a[1]
+        );
       } catch (error) {
         console.log(error);
       }
     },
-    createCounts(data) {
+    count(data, type) {
       const counts = data.issues
-        .map((issue) => issue.menu.en)
+        .map((issue) => (issue[type]["en"] ? issue[type]["en"] : issue[type]))
         .reduce((accum, i) => {
           accum[i] = accum[i] ? accum[i] + 1 : 1;
           return accum;
         }, {});
       return counts;
-    },
-    countPlaces(data) {
-      const counts = data.issues
-        .map((issue) => issue.country)
-        .reduce((accum, i) => {
-          accum[i] = accum[i] ? accum[i] + 1 : 1;
-          return accum;
-        }, {});
-      return Object.entries(counts).sort((a, b) => b[1] - a[1]);
     },
   },
 };
